@@ -47,9 +47,6 @@ export class AuthService {
         return tokens;
     }
 
-    async logout(userId: string) {
-        this.userService.updateUser({id: userId, refreshToken: "" });
-    }
 
     async hashData(data: string){
         const saltOrRounds = 10;

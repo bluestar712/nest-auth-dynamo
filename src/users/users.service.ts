@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { BadRequestException, Injectable } from "@nestjs/common";
 import { InjectModel, Model } from "nestjs-dynamoose";
 import { IUser, IUserKey } from "./interface/user.interface";
 import { CreateUserDto } from "./dto/create_user.dto";
@@ -18,6 +18,9 @@ export class UserService {
 
     async getOneUser(id: string): Promise<Partial<IUser>>{
         const user = await this.userModel.get({id});
+        if(!user){
+            throw new BadRequestException('No user on database');
+        }
         return user.serialize('frontend');
     }
 

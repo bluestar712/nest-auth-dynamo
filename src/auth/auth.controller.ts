@@ -20,10 +20,4 @@ export class AuthController {
         return this.authService.signIn(data);
     }
 
-    @UseGuards(AccessTokenGuard)
-    @Get('logout')
-    async logout(@Req() req: Request) {
-        this.authService.logout(req.user['sub']);
-    }
-    
 }
