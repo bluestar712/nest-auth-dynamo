@@ -1,6 +1,6 @@
 import { Schema } from "dynamoose";
 
-export const User = new Schema({
+export const UserSchema = new Schema({
     id: {
         type: String,
         hashKey: true
