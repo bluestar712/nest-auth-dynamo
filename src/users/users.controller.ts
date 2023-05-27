@@ -19,14 +19,17 @@ export class UserController {
     }
 
     @Get()
-    @UseGuards(AccessTokenGuard)
+    @UseGuards(AccessTokenGuard, RolesGuard)
+    @Roles(Role.Admin)
     async getAllUser(){
         const users = await this.userService.getAllUser();
         return users;
     }
 
     @Get('/:id')
-    @UseGuards(AccessTokenGuard)
+    @UseGuards(AccessTokenGuard, RolesGuard)
+    @Roles(Role.Admin)
+    @Roles(Role.User)
     async getOneUser(@Param('id') id: string){
         const response = await this.userService.getOneUser(id);
         return response;

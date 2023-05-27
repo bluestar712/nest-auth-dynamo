@@ -26,6 +26,9 @@ export const UserSchema = new Schema({
     },
     refreshToken: {
         type: String
+    },
+    role: {
+        type: String
     }
 
 })

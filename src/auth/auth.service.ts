@@ -27,7 +27,7 @@ export class AuthService {
             ...data,
             id: uuid(),
             password: hashedPassword,
-            refreshToken: ""
+            refreshToken: "",
         })
         const tokens = await this.getTokens(newUser.id, newUser.email, newUser.role);
         await this.updateRefreshToken(newUser.id, tokens.refreshToken);
