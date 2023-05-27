@@ -6,7 +6,8 @@ $ npm install
 
 ## 2. Make .env File
 
-Please make .env file and write variables on this project. 
+```bash
+Make .env file and write variables on this project. 
 
 AWS_ACCESS_KEY_ID = "your aws access key id"
 AWS_SECRET_ACCESS_KEY = "your aws secret access key"
@@ -14,7 +15,7 @@ AWS_REGION = "your aws region"
 
 JWT_ACCESS_SECRET = "jwt_access_secret"
 JWT_REFRESH_SECRET = "jwt_refresh_secret"
-
+```
 ## 3. Running the app
 
 ```bash
