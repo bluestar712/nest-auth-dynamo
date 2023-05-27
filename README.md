@@ -30,6 +30,7 @@ $ npm run start:prod
 The server will be running on localhost:3000
 ## 4. APIs
 
+```bash
 - Register api: 
 role value must be "Admin" or "User" on this api. 
 
@@ -74,3 +75,4 @@ The request must send with Bearer accessToken.
 
 endpoint: localhost:3000/users/:userId
 method: GET
+```
