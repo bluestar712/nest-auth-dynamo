@@ -11,6 +11,9 @@ import { UserController } from "./users.controller";
             schema: UserSchema,
             options: {
                 tableName: 'user'
+            },
+            serializers: {
+                frontend: {exclude: ['password', 'refreshToken']}
             }
         }])
     ],

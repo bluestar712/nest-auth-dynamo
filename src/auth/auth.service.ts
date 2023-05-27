@@ -4,7 +4,8 @@ import { JwtService } from "@nestjs/jwt";
 import { ConfigService } from "@nestjs/config";
 import { CreateUserDto } from "src/users/dto/create_user.dto";
 import * as bcrypt from 'bcrypt';
-import { IUser } from "src/users/interface/user.interface";
+import { AuthDto } from "./dto/auth.dto";
+import { v4 as uuid } from "uuid";
 
 @Injectable()
 export class AuthService {
@@ -14,8 +15,8 @@ export class AuthService {
         private readonly configService: ConfigService
     ){}
 
-    async signup(data: IUser): Promise<any>{
-        const userExists = await this.userService.getOneByUsername(data.username);
+    async signup(data: CreateUserDto): Promise<any>{
+        const userExists = await this.userService.getOneByEmail(data.email);
         if (userExists){
             throw new BadRequestException('User already exist');
         }
@@ -24,12 +25,26 @@ export class AuthService {
 
         const newUser = await this.userService.createUser({
             ...data,
-            id: data.username,
+            id: uuid(),
             password: hashedPassword,
             refreshToken: ""
         })
-        const tokens = await this.getTokens(newUser.id, newUser.username, newUser.role);
+        const tokens = await this.getTokens(newUser.id, newUser.email, newUser.role);
         await this.updateRefreshToken(newUser.id, tokens.refreshToken);
+        return tokens;
+    }
+
+    async signIn(data: AuthDto){
+        const user = await this.userService.getOneByEmail(data.email);
+        if(!user){
+            throw new BadRequestException('User does not exist');
+        }
+        const passwordMatches = await bcrypt.compare(data.password, user.password);
+        if(!passwordMatches){
+            throw new BadRequestException('Incorrect password');
+        }
+        const tokens = await this.getTokens(user.id, user.email, user.role);
+        await this.updateRefreshToken(user.id, tokens.refreshToken);
         return tokens;
     }
 

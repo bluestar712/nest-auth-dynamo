@@ -12,30 +12,29 @@ export class UserService {
     ){}
 
     async createUser(data: IUser): Promise<IUser>{
-        console.log("=============", data)
         const res = await this.userModel.create(data);
         return res;
     }
 
-    async getOneUser(id: string): Promise<IUser>{
-        console.log("id ===========", id)
-        const user = await this.userModel.query('id').contains(id).exec();
-        console.log("user ===========", user)
-        if(user) return user.length[0];
-        return null;
+    async getOneUser(id: string): Promise<Partial<IUser>>{
+        const user = await this.userModel.get({id});
+        return user.serialize('frontend');
     }
 
-    async getOneByUsername(username: string): Promise<IUser>{
-        console.log("username ====>", username)
-        const user = await this.userModel.query("id").eq(username).exec()
-        console.log("user =====>", user)
-        if(user) return user[0]
-        return null;
+    async getOneByEmail(email: string): Promise<IUser>{
+        const user = await this.userModel.scan("email").eq(email).exec()
+        return user ? user[0] : null;
     }
 
     async updateUser(updateData: Partial<IUser>): Promise<IUser>{
         const user = this.userModel.update(updateData as IUser) 
         return user;
+    }
+
+    async getAllUser(): Promise<Partial<IUser>[]>{
+        const allUsers = await this.userModel.scan().all().exec();
+        const serializedUsers = allUsers.map((user) => user.serialize('frontend')) 
+        return serializedUsers;
     }
 }
 

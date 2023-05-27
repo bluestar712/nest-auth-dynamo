@@ -6,15 +6,20 @@ export const UserSchema = new Schema({
         hashKey: true,
         required: true
     },
-    user_id: {
-        type: Number,
-        rangeKey: true,
-    },
-    username: {
+    email: {
         type: String,
     },
-    role: {
-        type: String
+    firstName: {
+        type: String,
+    },
+    lastName: {
+        type: String,
+    },
+    companyName: {
+        type: String,
+    },
+    companyNumber: {
+        type: Number
     },
     password: {
         type: String

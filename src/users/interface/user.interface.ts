@@ -3,7 +3,11 @@ export interface IUserKey{
 }
 
 export interface IUser extends IUserKey{
-    username: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+    companyNumber: number,
+    companyName: string,
     password: string;
     role: string;
     refreshToken: string;

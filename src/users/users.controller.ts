@@ -7,6 +7,7 @@ import { Roles } from "src/common/roles/role.decorator";
 import { Role } from "src/common/roles/role.enum";
 import { IUser } from "./interface/user.interface";
 
+
 @Controller('users')
 export class UserController {
     constructor(private readonly userService: UserService){}
@@ -17,10 +18,17 @@ export class UserController {
         return result;
     }
 
+    @Get()
+    @UseGuards(AccessTokenGuard)
+    async getAllUser(){
+        const users = await this.userService.getAllUser();
+        return users;
+    }
+
     @Get('/:id')
-    @UseGuards(AccessTokenGuard, RolesGuard)
-    @Roles(Role.User)
+    @UseGuards(AccessTokenGuard)
     async getOneUser(@Param('id') id: string){
-        return this.userService.getOneUser(id);
+        const response = await this.userService.getOneUser(id);
+        return response;
     }
 }
