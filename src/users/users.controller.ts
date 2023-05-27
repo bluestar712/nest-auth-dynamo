@@ -5,13 +5,14 @@ import { AccessTokenGuard } from "src/common/guards/accessToken.guard";
 import { RolesGuard } from "src/common/guards/roles.guard";
 import { Roles } from "src/common/roles/role.decorator";
 import { Role } from "src/common/roles/role.enum";
+import { IUser } from "./interface/user.interface";
 
 @Controller('users')
 export class UserController {
     constructor(private readonly userService: UserService){}
 
     @Post()
-    async createUser(@Body() data: CreateUserDto){
+    async createUser(@Body() data: IUser){
         const result = await this.userService.createUser(data);
         return result;
     }
