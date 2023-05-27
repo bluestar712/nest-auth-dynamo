@@ -10,5 +10,5 @@ export interface IUser extends IUserKey{
     companyName: string,
     password: string;
     role: string;
-    refreshToken: string;
+    refreshToken?: string;
 }

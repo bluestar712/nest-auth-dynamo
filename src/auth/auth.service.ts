@@ -27,7 +27,6 @@ export class AuthService {
             ...data,
             id: uuid(),
             password: hashedPassword,
-            refreshToken: "",
         })
         const tokens = await this.getTokens(newUser.id, newUser.email, newUser.role);
         await this.updateRefreshToken(newUser.id, tokens.refreshToken);
@@ -46,6 +45,10 @@ export class AuthService {
         const tokens = await this.getTokens(user.id, user.email, user.role);
         await this.updateRefreshToken(user.id, tokens.refreshToken);
         return tokens;
+    }
+
+    async logout(userId: string) {
+        this.userService.updateUser({id: userId, refreshToken: "" });
     }
 
     async hashData(data: string){

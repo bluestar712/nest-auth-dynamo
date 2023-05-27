@@ -33,5 +33,5 @@ export class CreateUserDto {
 
     @IsOptional()
     @IsString()
-    readonly refreshToken: string;
+    readonly refreshToken?: string;
 }
