@@ -9,10 +9,10 @@ import { UserModule } from './users/users.module';
 
 @Module({
   imports: [
-    DynamooseModule.forRootAsync({useClass: DynamooseConfigService}),
+    DynamooseModule.forRootAsync({ useClass: DynamooseConfigService }),
     AuthModule,
     // UserModule,
-    ConfigModule.forRoot({isGlobal: true}),
+    ConfigModule.forRoot({ isGlobal: true }),
   ],
   controllers: [AppController],
   providers: [AppService],
